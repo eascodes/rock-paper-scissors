@@ -1,10 +1,10 @@
-let computerScore = 0;
-let playerScore = 0;
+let computerScore = 0; //Declares initial score for computer
+let playerScore = 0; //Declares initial score for player
 
 function game() {
     for (let i = 0; i < 5; i++) {
         
-        let playerSelection = prompt("Rock, paper, or scissors?");
+        let playerSelection = prompt("Rock, paper, or scissors?"); //Obtains player's response
 
         function getComputerChoice() { //Determine's computer's response
             let randomNum = Math.floor(Math.random()*100);
@@ -56,10 +56,11 @@ function game() {
             }
         }
         
-        console.log(playRound(playerSelection, computerSelection));
-        console.log(`Your score is ${playerScore}. Computer score is ${computerScore}.`);
+        console.log(playRound(playerSelection, computerSelection)); //Displays winner of the round
+        console.log(`Your score is ${playerScore}. Computer score is ${computerScore}.`);//Displays score at end of each round
     }
 
+    //Displays the overall winner of the game
     if (playerScore > computerScore) {
         console.log("YOU WIN!");
     } else if (computerScore > playerScore) {
