@@ -1,15 +1,16 @@
-//DISPLAYING RESULTS ON PAGE
+//DISPLAYING RESULTS
 
 const results = document.querySelector('.results-container');
 const roundWinner = document.createElement('p');
 const scoreKeeper = document.createElement('p');
 const gameWinner = document.createElement('p');
+const restartContainer = document.querySelector('.restart-container');
+const restart = document.createElement('button');
 results.appendChild(roundWinner);
 results.appendChild(scoreKeeper);
 results.appendChild(gameWinner);
 
-
-//RUNNING THE GAME
+//RUNNING GAME
 
 let computerScore = 0; //Declares initial score for computer
 let playerScore = 0; //Declares initial score for player
@@ -25,10 +26,10 @@ function getComputerChoice() { //Determine's computer's response
     }
 }
 
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('.btn');
 
 buttons.forEach((button) => {
-    button.addEventListener('click', () => { //Plays round & displays score every time button clicked
+    button.addEventListener('click', function playGame() { //Plays round & displays score every time button clicked
         if (computerScore < 5 && playerScore < 5) {
             let playerSelection = button.className;
             let computerSelection = getComputerChoice();
@@ -39,13 +40,17 @@ buttons.forEach((button) => {
             } else if (playerScore >= 5) {
                 gameWinner.textContent = "YOU WIN!";
             }
-        } else {console.log("Restart game?")};
+        } 
+        
+        if (computerScore == 5 || playerScore == 5) {
+            displayRestart();
+        };
     });
 
 });
 
 function playRound(playerSelection, computerSelection) { //Compares player & computer responses to determine winner
-    if (playerSelection == "rock") {
+    if (playerSelection == "rock btn") {
         if (computerSelection == "Rock") {
             roundWinner.textContent = "It's a tie!";
         } else if (computerSelection == "Paper") {
@@ -55,7 +60,7 @@ function playRound(playerSelection, computerSelection) { //Compares player & com
             playerScore++;
             roundWinner.textContent = "You win! Rock beats scissors";
         }
-    } else if (playerSelection == "paper") {
+    } else if (playerSelection == "paper btn") {
         if (computerSelection == "Rock") {
             playerScore++;
             roundWinner.textContent = "You win! Paper beats rock";
@@ -65,7 +70,7 @@ function playRound(playerSelection, computerSelection) { //Compares player & com
             computerScore++;
             roundWinner.textContent = "You lose! Scissors beats paper";
         }
-    } else if (playerSelection == "scissors") {
+    } else if (playerSelection == "scissors btn") {
         if (computerSelection == "Rock") {
             computerScore++
             roundWinner.textContent = "You lose! Rock beats scissors";
@@ -76,6 +81,29 @@ function playRound(playerSelection, computerSelection) { //Compares player & com
             roundWinner.textContent = "It's a tie!";
         }
     } else {
-        roundWinner.textContent = "You need to type rock, paper, or scissors.";
+        console.log("Error with playerSelection");
     }
 }
+
+//RESTARTING GAME
+
+function displayRestart() { //Displays restart button
+    restart.textContent = "Restart!";
+    restartContainer.appendChild(restart);
+    restart.classList.add("restart-btn");
+}
+
+document.body.addEventListener('click', function(e) {
+    if (e.target.className == "restart-btn") {
+        restartGame()
+    }
+});
+
+function restartGame() {
+    computerScore = 0;
+    playerScore = 0;  
+    scoreKeeper.textContent = `Your score is ${playerScore}. Computer score is ${computerScore}.`;//Displays score at end of each round
+    roundWinner.textContent = "";
+    gameWinner.textContent = "";
+}
+
